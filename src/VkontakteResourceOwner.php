@@ -10,6 +10,7 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
      * @var array
      */
     protected $data;
+
     /**
      * @param  array $response
      */
@@ -19,6 +20,7 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
         if (isset($token->email))
             $this->data['email'] = $token->email;
     }
+
     /**
      * Returns the ID for the user as a string if present.
      *
@@ -28,6 +30,7 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
     {
         return $this->getField('uid');
     }
+
     /**
      * Returns the name for the user as a string if present.
      *
@@ -35,8 +38,9 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
      */
     public function getName()
     {
-        return $this->getField('screen_name');
+        return $this->getField('nickname');
     }
+
     /**
      * Returns the first name for the user as a string if present.
      *
@@ -46,6 +50,7 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
     {
         return $this->getField('first_name');
     }
+
     /**
      * Returns the last name for the user as a string if present.
      *
@@ -55,6 +60,7 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
     {
         return $this->getField('last_name');
     }
+
     /**
      * Returns the email for the user as a string if present.
      *
@@ -64,6 +70,28 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
     {
         return $this->getField('email');
     }
+
+    /**
+     * Return gender
+     * @return string|null
+     */
+    public function getGender()
+    {
+        switch($this->getField('sex')) {
+            case 0:
+                $gender = null;
+                break;
+            case 1:
+                $gender = 'female';
+                break;
+            case 2:
+                $gender = 'male';
+                break;
+        }
+
+        return $gender;
+    }
+
     /**
      * Returns all the data obtained about the user.
      *
@@ -73,6 +101,7 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
     {
         return $this->data;
     }
+
     /**
      * Returns a field from the Graph node data.
      *
@@ -84,4 +113,5 @@ class VkontakteResourceOwner implements ResourceOwnerInterface
     {
         return isset($this->data[$key]) ? $this->data[$key] : null;
     }
+
 }
